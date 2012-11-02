@@ -1,0 +1,18 @@
+#!/bin/bash
+####################################################
+# Please customize these values appropriately:
+LOCATION=/home/ubuntu/cosm
+API_KEY='IMlXcLePBJI8e_lzLI3GRXWEp--SAKxZQ1pGUWxuY09tUT0g'
+FEED_ID='83617'
+DATASTREAM_ID='BeagleBone-Sensor1'
+####################################################
+COSM_URL=http://api.cosm.com/v2/feeds/$FEED_ID/datastreams/$DATASTREAM_ID/datapoints.csv
+sleep 2 # gives any data logging scheduled at the same time a chance to run
+echo $COSM_URL
+curl -v --request POST --header "X-ApiKey: $API_KEY" --data-binary @$LOCATION/cosm.csv $COSM_URL
+if [ $? -eq 0 ]
+then
+rm $LOCATION/cosm.csv
+#echo "Would delete file now."
+fi
+#echo "Done"
